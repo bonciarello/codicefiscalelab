@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validatore Codice Fiscale — Verifica e decodifica online gratuita</title>
+  <meta name="description" content="Verifica la validità del tuo codice fiscale italiano e scopri i dati anagrafici codificati: cognome, nome, data di nascita, sesso e comune. Archivio comuni incluso, nessun dato inviato a server esterni.">
+  <link rel="canonical" href="https://cristianporco.it/app/codicefiscalelab/">
+  <meta property="og:title" content="Validatore Codice Fiscale Italiano">
+  <meta property="og:description" content="Verifica e decodifica il tuo codice fiscale: estrai nome, cognome, data di nascita, sesso e comune di nascita. Strumento gratuito e autonomo.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cristianporco.it/app/codicefiscalelab/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Validatore Codice Fiscale Italiano",
+    "url": "https://cristianporco.it/app/codicefiscalelab/",
+    "description": "Strumento online per verificare e decodificare il codice fiscale italiano, estraendo dati anagrafici e comune di nascita.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="./" class="logo" aria-label="CodiceFiscaleLab — Torna alla home">
+        <span class="logo-icon" aria-hidden="true">〶</span>
+        <span class="logo-text">CodiceFiscale<span class="logo-accent">Lab</span></span>
+      </a>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Hero / Input Section -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-content">
+        <p class="eyebrow">Strumento gratuito</p>
+        <h1 id="hero-heading">Decodifica il tuo<br>codice fiscale</h1>
+        <p class="hero-sub">Inserisci un codice fiscale di 16 caratteri per verificarne la validità e scoprire i dati anagrafici codificati al suo interno.</p>
+      </div>
+
+      <form id="cf-form" class="cf-form" novalidate autocomplete="off">
+        <div class="input-group">
+          <label for="cf-input" class="input-label">Codice Fiscale</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="cf-input"
+              name="cf"
+              class="cf-input"
+              maxlength="16"
+              minlength="16"
+              placeholder="RSSMRA80A01H501X"
+              autocomplete="off"
+              spellcheck="false"
+              aria-describedby="cf-hint cf-error"
+            >
+            <button type="submit" class="submit-btn" aria-label="Verifica codice fiscale">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </button>
+          </div>
+          <p id="cf-hint" class="input-hint">16 caratteri — lettere maiuscole e cifre. Esempio: RSSMRA80A01H501X</p>
+          <div id="cf-error" class="error-msg" role="alert" aria-live="polite"></div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results" aria-labelledby="results-heading" hidden>
+      <h2 id="results-heading" class="results-title">Risultato della decodifica</h2>
+
+      <!-- Fiscal Code Breakdown Card -->
+      <div class="cf-card" aria-label="Scomposizione del codice fiscale">
+        <div class="cf-card-header">
+          <span class="cf-card-badge" id="validity-badge"></span>
+          <span class="cf-card-code" id="result-cf"></span>
+        </div>
+        <div class="cf-breakdown" id="cf-breakdown" aria-label="Componenti del codice fiscale">
+          <!-- filled by JS -->
+        </div>
+      </div>
+
+      <!-- Anagraphic Data Grid -->
+      <div class="data-grid" id="data-grid" aria-label="Dati anagrafici estratti">
+        <!-- filled by JS -->
+      </div>
+
+      <!-- Comune info -->
+      <div class="comune-card" id="comune-card" aria-label="Comune di nascita">
+        <!-- filled by JS -->
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works" aria-labelledby="how-heading">
+      <h2 id="how-heading" class="section-title">Come funziona il codice fiscale</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-marker" aria-hidden="true">1</div>
+          <div>
+            <h3 class="step-title">Cognome e Nome</h3>
+            <p>I primi 6 caratteri codificano cognome (3 lettere) e nome (3 lettere), estraendo prima le consonanti e poi le vocali.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-marker" aria-hidden="true">2</div>
+          <div>
+            <h3 class="step-title">Data di nascita e sesso</h3>
+            <p>Anno (2 cifre), mese (1 lettera: A=Gen, B=Feb, … T=Dic) e giorno (2 cifre; +40 per le donne).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-marker" aria-hidden="true">3</div>
+          <div>
+            <h3 class="step-title">Comune di nascita</h3>
+            <p>4 caratteri alfanumerici: il codice catastale (Belfiore) che identifica il comune italiano di nascita.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-marker" aria-hidden="true">4</div>
+          <div>
+            <h3 class="step-title">Carattere di controllo</h3>
+            <p>L'ultimo carattere (CIN) è calcolato con un algoritmo sui primi 15, per verificare l'integrità del codice.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>CodiceFiscaleLab &mdash; strumento gratuito di verifica e decodifica. I dati anagrafici estratti sono parziali: il cognome e il nome originali potrebbero differire dalle triplette derivate in caso di omonimie.</p>
+      <p class="footer-disclaimer">Nessun dato viene inviato a server esterni. L'archivio dei codici catastali è incluso localmente.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

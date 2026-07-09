@@ -1,0 +1,665 @@
+/* ==========================================================================
+   CodiceFiscaleLab — Validatore Codice Fiscale Italiano
+   Design system: Tessera Sanitaria italiana moderna
+   ========================================================================== */
+
+/* ---- CSS Custom Properties (Design Tokens) ---- */
+:root {
+  /* Palette */
+  --color-primary:       #003C71;
+  --color-primary-light: #004D8F;
+  --color-primary-bg:    #E8F0F8;
+  --color-accent:        #D62828;
+  --color-accent-bg:     #FFF0F0;
+  --color-success:       #2E7D32;
+  --color-success-bg:    #EDF7EE;
+
+  /* Surfaces */
+  --color-surface:       #F8F9FB;
+  --color-card:          #FFFFFF;
+  --color-border:        #E1E4E8;
+  --color-border-light:  #EEF0F3;
+
+  /* Text */
+  --color-text:          #1A1A2E;
+  --color-text-secondary:#5F6B7A;
+  --color-text-muted:    #8B95A5;
+
+  /* Focus */
+  --color-focus:         #003C71;
+  --focus-ring:          0 0 0 3px rgba(0, 60, 113, 0.25);
+
+  /* Spacing (4px grid) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Typography */
+  --font-body:  'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:  'DM Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Type scale */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.375rem;
+  --text-2xl:  1.75rem;
+  --text-3xl:  2.25rem;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.10);
+
+  /* Layout */
+  --max-width: 720px;
+  --header-height: 56px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}
+
+/* ---- Reset & Base ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Reduced Motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ---- Focus ---- */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* ---- Header ---- */
+.site-header {
+  background: var(--color-card);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--header-height);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  border-radius: var(--radius-sm);
+}
+
+.logo-icon {
+  font-size: 1.4em;
+  line-height: 1;
+}
+
+.logo-accent {
+  color: var(--color-primary);
+}
+
+/* ---- Main ---- */
+.app-main {
+  flex: 1;
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4) var(--space-12);
+}
+
+/* ---- Hero ---- */
+.hero {
+  margin-bottom: var(--space-8);
+}
+
+.hero-content {
+  margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-2);
+}
+
+#hero-heading {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.hero-sub {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  max-width: 540px;
+  line-height: 1.6;
+}
+
+/* ---- Form ---- */
+.cf-form {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.input-label {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.input-wrapper {
+  display: flex;
+  gap: 0;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+  background: var(--color-card);
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 60, 113, 0.12);
+}
+
+.cf-input {
+  flex: 1;
+  border: none;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--color-text);
+  background: transparent;
+  min-width: 0;
+  text-transform: uppercase;
+}
+
+.cf-input::placeholder {
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+  font-weight: 400;
+  font-size: 1rem;
+  opacity: 0.6;
+}
+
+.cf-input:focus {
+  outline: none;
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  min-width: 48px;
+  border: none;
+  background: var(--color-primary);
+  color: #fff;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.submit-btn:hover {
+  background: var(--color-primary-light);
+}
+
+.submit-btn:active {
+  background: #002D55;
+}
+
+.submit-btn:focus-visible {
+  box-shadow: inset 0 0 0 3px rgba(255,255,255,0.4);
+  border-radius: 0;
+}
+
+.input-hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.error-msg {
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+  font-weight: 500;
+  min-height: 1.4em;
+  padding: var(--space-1) 0;
+  line-height: 1.5;
+}
+
+.error-msg:empty {
+  display: none;
+}
+
+/* Input error state */
+.input-wrapper.input-error {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(214, 40, 40, 0.12);
+}
+
+/* Loading state */
+.submit-btn.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.submit-btn.loading svg {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Results ---- */
+.results {
+  margin-bottom: var(--space-10);
+}
+
+.results-title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  margin-bottom: var(--space-5);
+  color: var(--color-text);
+}
+
+/* CF Card */
+.cf-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.cf-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.cf-card-badge {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+
+.cf-card-badge.valid {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.cf-card-badge.invalid {
+  background: var(--color-accent-bg);
+  color: var(--color-accent);
+}
+
+.cf-card-code {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--color-text);
+  word-break: break-all;
+}
+
+/* CF Breakdown — the signature element */
+.cf-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  align-items: flex-end;
+}
+
+.cf-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.cf-block-chars {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  min-width: 2ch;
+  text-align: center;
+}
+
+.cf-block-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* Block color coding */
+.cf-block-cognome .cf-block-chars   { background: #E3F0FA; color: #003C71; }
+.cf-block-nome .cf-block-chars      { background: #E0F2F1; color: #00695C; }
+.cf-block-anno .cf-block-chars      { background: #FFF3E0; color: #E65100; }
+.cf-block-mese .cf-block-chars      { background: #F3E5F5; color: #7B1FA2; }
+.cf-block-giorno .cf-block-chars    { background: #FCE4EC; color: #C62828; }
+.cf-block-catastale .cf-block-chars { background: #E8F5E9; color: #2E7D32; }
+.cf-block-cin .cf-block-chars       { background: #FFF8E1; color: #F57F17; }
+
+/* ---- Data Grid ---- */
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.data-item {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.data-item-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.data-item-value {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.data-item-value.mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  letter-spacing: 0.05em;
+}
+
+/* ---- Comune Card ---- */
+.comune-card {
+  background: var(--color-primary-bg);
+  border: 1px solid rgba(0, 60, 113, 0.15);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.comune-card-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-size: 1.25rem;
+}
+
+.comune-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.comune-card-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+
+.comune-card-name {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.comune-card-code {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-1);
+}
+
+.comune-card-notfound {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+/* ---- How It Works ---- */
+.how-it-works {
+  margin-bottom: var(--space-10);
+}
+
+.section-title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  margin-bottom: var(--space-6);
+  color: var(--color-text);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.step {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.step-marker {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+}
+
+.step-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+  color: var(--color-text);
+}
+
+.step p {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+/* ---- Footer ---- */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-card);
+  padding: var(--space-6) var(--space-4);
+}
+
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.footer-disclaimer {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  :root {
+    --text-3xl: 1.75rem;
+    --text-2xl: 1.375rem;
+    --text-xl: 1.25rem;
+    --header-height: 48px;
+  }
+
+  .app-main {
+    padding: var(--space-5) var(--space-3) var(--space-8);
+  }
+
+  .cf-form {
+    padding: var(--space-4);
+  }
+
+  .cf-input {
+    font-size: 1.1rem;
+    padding: var(--space-3);
+    letter-spacing: 0.08em;
+  }
+
+  .cf-input::placeholder {
+    font-size: 0.85rem;
+  }
+
+  .cf-breakdown {
+    gap: 1px;
+  }
+
+  .cf-block-chars {
+    font-size: 1.15rem;
+    padding: 3px 4px;
+  }
+
+  .cf-block-label {
+    font-size: 0.55rem;
+  }
+
+  .data-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  .data-item {
+    padding: var(--space-3);
+  }
+
+  .cf-card {
+    padding: var(--space-4);
+  }
+
+  .comune-card {
+    padding: var(--space-4);
+  }
+}
+
+@media (max-width: 380px) {
+  .data-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Utility: hidden ---- */
+[hidden] {
+  display: none !important;
+}
